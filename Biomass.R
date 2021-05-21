@@ -6,7 +6,9 @@ library(tidyverse)
 
 #Import data
 biomass2015 <- read_excel("Data/biomass2015.xls", + sheet = "Site L") # Only first sheet
-biomass <- read_excel("Data/biomass2015.xls", + sheet = ".x") #alle ark VIRKER IKKE
+
+biomass <- (read_excel(path = "Data/biomass2015.xls"))  %>% 
+     map_df(read_excel(path = "Data/biomass2015.xls",  sheet = .x)) #alle ark VIRKER IKKE
 
 
 #select plot and production, the relevant columns

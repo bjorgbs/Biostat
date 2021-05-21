@@ -64,6 +64,6 @@ gitcreds::gitcreds_set()
  # Could not find system git
  # Restartet alt, det virket
 
-use_git() #Legger inn Biomass
+use_git(Biostat) #creating a git repo
 
 use_github()
