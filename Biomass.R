@@ -39,3 +39,5 @@ library(ggplot2)
 
 Site_L_plot <- ggplot(SiteL, aes(x = plot, y = biomass)) + geom_point()
 Site_L_plot
+
+
