@@ -3,38 +3,43 @@ Task
 
 library(readxl)
 library(tidyverse)
+library(purrr)
 
 #Import data
-biomass2015 <- read_excel("Data/biomass2015.xls", + sheet = "Site L") # Only first sheet
+#biomass <- list.files(path = "Data/biomass2015.xls") %>% 
+#  map_dfr(~read_excel(sheet = .x, delim = ","))
+#(read_excel(path = "Data/biomass2015.xls"))  %>% 
+ #    map_dfr(read_excel(path = "Data/biomass2015.xls", + sheet = .x)) #alle ark VIRKER IKKE
 
-biomass <- (read_excel(path = "Data/biomass2015.xls"))  %>% 
-     map_df(read_excel(path = "Data/biomass2015.xls",  sheet = .x)) #alle ark VIRKER IKKE
+biomassL <- read_excel("Data/biomass2015.xls",  sheet = "Site L") # Only first sheet
+biomassM <- read_excel("Data/biomass2015.xls",  sheet = "Site M")
+biomassA <- read_excel("Data/biomass2015.xls",  sheet = "Site A")
+biomassH <- read_excel("Data/biomass2015.xls",  sheet = "Site H")
 
+biomass <- rbind(biomassA, biomassH, biomassL, biomassM)
 
-#select plot and production, the relevant columns
-biomass2015 %>%                                  
-  select(plot, production) #Select forteller hvilke kolonner som skal med
+biomass %>%                                  
+  select(site, plot, production) #Select forteller hvilke kolonner som skal med
 
 #Grupper
-biomass2015 %>%                                  
-  select(plot, species, production) %>% #Select forteller hvilke kolonner som skal med
-  group_by(plot) %>% # Grupperer de forskjellige plottene
+biomass %>%                                  
+  select(site, plot, production) %>% #Select forteller hvilke kolonner som skal med
+  group_by(site, plot) %>% # Grupperer de forskjellige plottene
   mutate(sum_biomass = sum(production, na.rm = TRUE)) #summerer biomasse
 
 #fjern duplikater
-biomass2015 %>%                                  
-  select(plot, species, production) %>% #Select forteller hvilke kolonner som skal med
-  group_by(plot) %>% # Grupperer de forskjellige plottene
+biomass %>%                                  
+  select(site, plot, species, production) %>% #Select forteller hvilke kolonner som skal med
+  group_by(site, plot) %>% # Grupperer de forskjellige plottene
   mutate(sum_biomass = sum(production, na.rm = TRUE)) %>%  #summerer biomasse
-  distinct(plot, keep = sum_biomass)# Tar bort radene som har duplikater i kolonnen plot
+  distinct(plot, biomass = sum_biomass, )# Tar bort radene som har duplikater i kolonnen plot
 
 #Assign
-SiteL <- biomass2015 %>%                                  
-  select(plot, species, production) %>% 
-  group_by(plot) %>% 
+SiteL <- biomass %>%                                  
+  select(site, plot, species, production) %>% 
+  group_by(site, plot) %>% 
   mutate(sum_biomass = sum(production, na.rm = TRUE)) %>%  
-  distinct(plot, biomass = sum_biomass)
-
+  distinct(plot, biomass = sum_biomass, )
 
 #Plotting
 library(ggplot2)
