@@ -62,5 +62,8 @@ use_git_config(user.name = "bjorgbs",user.email = "bjorgbs@hi.no")
 gitcreds::gitcreds_set()
 #Error in throw(new_error("gitcreds_nogit_error")) : 
  # Could not find system git
+ # Restartet alt, det virket
 
+use_git() #Legger inn Biomass
 
+use_github()
