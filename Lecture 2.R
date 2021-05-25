@@ -6,10 +6,15 @@ setwd("C:/Users/bjorgbs/R arbeid/Biostat")
 
 library(readxl)
 library(tidyverse)
+library(purr)
         
 #Import data
-biomass2015 <- read_excel("Data/biomass2015.xls", + sheet = "Site L") # Only first sheet
-biomass <- read_excel("Data/biomass2015.xls", + sheet = ".x") #alle ark VIRKER IKKE
+
+biomass <- list.files(path = "Data/biomass2015.xls", pattern = "\\.xls$", full.names = TRUE) %>% 
+  map_dfr(~read_excel(file = .x, delim = ","))
+
+#biomass2015 <- read_excel("Data/biomass2015.xls", + sheet = "Site L") # Only first sheet
+#biomass <- read_excel("Data/biomass2015.xls", + sheet = ".x") #alle ark VIRKER IKKE
 
 
 #select plot and production, the relevant columns
@@ -66,4 +71,5 @@ gitcreds::gitcreds_set()
 
 use_git() #creating a git repo
 
-use_github()
+use_github() # Are suppose to upload it to github
+
