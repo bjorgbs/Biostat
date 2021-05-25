@@ -47,4 +47,8 @@ library(ggplot2)
 Site_L_plot <- ggplot(SiteL, aes(x = plot, y = biomass)) + geom_point()
 Site_L_plot
 
+use_git_config(user.name = "bjorgbs",user.email = "bjorgbs@hi.no")
 
+gitcreds::gitcreds_set()
+
+use_github()
