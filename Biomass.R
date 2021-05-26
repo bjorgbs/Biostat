@@ -18,8 +18,15 @@ biomassH <- read_excel("Data/biomass2015.xls",  sheet = "Site H")
 
 biomass <- rbind(biomassA, biomassH, biomassL, biomassM)
 
+# SLå sammen alle fire datasett
 biomass %>%                                  
   select(site, plot, production) #Select forteller hvilke kolonner som skal med
+
+##Kunne også blitt gjort ved å bruke full_join funksjon i dplyr (hovedfil, by = Production), har ikke forsøkt.
+## 
+
+## Kunne også blirr gjort med bind_rows i dplyr, ser ut til å gjøre det samme. Man kan da legge til .id="navn på ekstra kolonne")
+
 
 #Grupper
 biomass %>%                                  

@@ -1,5 +1,6 @@
 setwd("C:/Users/bjorgbs/R arbeid/Biostat")
 
+############################################################
 ####### Functions and Packages #######
 
 library(biostats.tutorials)
@@ -83,8 +84,9 @@ citation("conflicted")
 #  url = {https://CRAN.R-project.org/package=conflicted},
 #}
 
-
+###############################################################################
 ####### using-dplyr ########
+
 library(biostats.tutorials)
 learnr::run_tutorial("using-dplyr", package = "biostats.tutorials")
 
@@ -158,3 +160,52 @@ penguins %>%
   summarise(mean_flipper_length = mean(flipper_length_mm)) #Bestemmer hvilke analyser som skal utføres
 
 penguins %>% arrange(bill_length_mm, bill_depth_mm)#Sorterer etter gitte kolonner
+
+#Dplyr har mange funksjoner for å slå sammen og filtrere i datasett.
+#For eksempel bind_cols (data1, data2, data3) hvor datasettene ville blitt lagt til som ekstra kolonner.
+
+
+####################################################################################################
+############## Working with dates and times #######################################################
+
+# Use thje international standard format Year-Month-Day Hour:Minute:Second  ex. 2020-12-5 12:23:13
+
+dat <- "26 October 2016 14:39:10 CEST" #date with time-zone
+as.POSIXct(dat, format = "%d %B %Y %H:%M:%S")
+
+#Konverter
+date1 <- "28/02/1999"
+as.Date(date1, "%d/%m/%Y")
+##"1999-02-28"
+
+date2 <- "July 1 2001 2:14"
+as.POSIXct(date2, format = "%B %d %Y %H:%M")
+#NA. I get NA, but this should be the solution
+
+#Use library("lubridate") for easyer converting
+library(lubridate)
+
+date2 <- "June 1 2001 2:14"
+mdy_hm(date2)
+
+Sys.getlocale(category = "LC_TIME") #Identify the date language
+#"Norwegian Bokmål_Norway.1252"
+
+
+##Lager et nytt datasett temperature2 med en ekstra kolonne hvor dato og tid er samlet, konverterer det så til std format
+temperature2 <- temperature %>% 
+  mutate(
+    date_time = paste(Dato, Tid), #combine
+    date_time = ymd_hms(date_time)#convert
+  ) 
+
+temperature2
+
+
+#############################################################################
+############## ##text-manipulation ###################
+
+library(biostats.tutorials)
+learnr::run_tutorial("text-manipulation", package = "biostats.tutorials")
+
+library("tidyverse")# load stringr, ggplot2, dplyr etc

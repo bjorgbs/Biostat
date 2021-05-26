@@ -19,8 +19,8 @@ learnr::run_tutorial("naming-objects", package = "biostats.tutorials") #åpner t
   ##function-packages
   ##importing-data
   ##using-dplyr
-  #Dates-and-times
-  #text-manipulation
+  ##Dates-and-times
+  ##text-manipulation
 
 #package lintr # Tells you where your code's ugly
 
